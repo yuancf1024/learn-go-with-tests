@@ -9,6 +9,10 @@ const helloPrefix = "Hello, "
 const spanishHelloPrefix = "Hola, " 
 const frenchHelloPrefix = "Bonjour, "
 
+func main() {
+	fmt.Println(Hello("world", ""))
+}
+
 // 需求是指定问候的接受者
 func Hello(name string, language string) string {
 
@@ -16,15 +20,24 @@ func Hello(name string, language string) string {
 		name = "World"
 	}
 
-	prefix := helloPrefix
+	return greetingPrefix(language) + name
+}
+
+func greetingPrefix(language string) (prefix string) {
+	// prefix := helloPrefix
 
 	switch language {
 	case french:
 		prefix = frenchHelloPrefix
 	case spanish:
 		prefix = spanishHelloPrefix
+	default:
+		prefix = helloPrefix
 	}
-	return prefix + name
+	return
+}
+
+	
 
 	// if language == spanish {
 	// 	return spanishHelloPrefix + name
@@ -34,8 +47,5 @@ func Hello(name string, language string) string {
 	// 	return frenchHelloPrefix + name
 	// }
 	// return helloPrefix + name
-}
 
-func main() {
-	fmt.Println(Hello("world", ""))
-}
+

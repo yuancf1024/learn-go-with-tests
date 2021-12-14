@@ -3,6 +3,7 @@ package iteration
 import (
 	"fmt"
 	"testing"
+	"strings"
 )
 
 func TestRepeat(t *testing.T) {
@@ -24,4 +25,16 @@ func ExampleRepeat() {
 	repeated := Repeat("a", 5)
 	fmt.Println(repeated)
 	// Output: aaaaa
+}
+
+// 为strings包中的某些函数编写测试
+func TestEqualFold(t *testing.T) {
+	a := "Go"
+	b := "go"
+	got := strings.EqualFold(a, b)
+	want := true
+
+	if got != want {
+		t.Errorf("want '%v' but got '%v'", want, got)
+	}
 }

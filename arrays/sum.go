@@ -8,16 +8,17 @@ func Sum(numbers []int) int {
 	return sum
 }
 
-func sumAll(numbersToSum ...[]int) []int {
-	// lengthOfNumbers := len(numbersToSum)
-	// sums = make([]int, lengthOfNumbers)
+func SumAllTails(numbersToSum ...[]int) []int {
 
 	var sums []int
 
 	for _, numbers := range numbersToSum {
-		// sums[i] = Sum(numbers)
-		// 使用 append 函数，它能为切片追加一个新值。
-		sums = append(sums, Sum(numbers))
+		if len(numbers) == 0 {
+			sums = append(sums, 0)
+		} else {
+			tail := numbers[1:]
+			sums = append(sums, Sum(tail))
+		}
 	}
 
 	return sums

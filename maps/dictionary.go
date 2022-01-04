@@ -57,3 +57,8 @@ func (d Dictionary) Update(word, definition string) error {
 	
 	return nil
 }
+
+// 定义字典的删除函数功能
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
+}

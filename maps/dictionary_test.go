@@ -72,3 +72,14 @@ func assertDefinition(t *testing.T, dictionary Dictionary, word, definition stri
 		t.Errorf("got '%s' want '%s'", got, definition)
 	}
 }
+
+func TestUpdate(t *testing.T) {
+	word := "test"
+	definition := "this is just a test"
+	dictionary := Dictionary{word: definition}
+	newDefinition := "new definition"
+
+	dictionary.Update(word, newDefinition)
+
+	assertDefinition(t, dictionary, word, newDefinition)
+}

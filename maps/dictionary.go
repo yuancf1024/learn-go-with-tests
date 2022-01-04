@@ -1,14 +1,19 @@
 package main
 
-import "errors"
+// import "errors"
 
 type Dictionary map[string]string
 
-var (
-	ErrNotFound = errors.New("counld not find the word you were looking for")
-	ErrWordExists = errors.New("cannot add word because it already exists")
+const (
+	ErrNotFound = DictionaryErr("counld not find the word you were looking for")
+	ErrWordExists = DictionaryErr("cannot add word because it already exists")
 )
 
+type DictionaryErr string
+
+func (e DictionaryErr) Error() string {
+	return string(e)
+}
 
 // 定义字典的搜索函数
 func (d Dictionary) Search(word string) (string, error) {
@@ -34,4 +39,8 @@ func (d Dictionary) Add(word, definition string) error {
 	}
 	
 	return nil
+}
+
+func (d Dictionary) Update(word, definition string) {
+	d[word] = definition
 }

@@ -74,12 +74,25 @@ func assertDefinition(t *testing.T, dictionary Dictionary, word, definition stri
 }
 
 func TestUpdate(t *testing.T) {
-	word := "test"
-	definition := "this is just a test"
-	dictionary := Dictionary{word: definition}
-	newDefinition := "new definition"
+	t.Run("existing word", func(t *testing.T) {
+		word := "test"
+		definition := "this is just a test"
+		dictionary := Dictionary{word: definition}
+		newDefinition := "new definition"
+	
+		err := dictionary.Update(word, newDefinition)
+	
+		assertError(t, err, nil)
+		assertDefinition(t, dictionary, word, newDefinition)
+	})
 
-	dictionary.Update(word, newDefinition)
+	t.Run("new word", func(t *testing.T) {
+		word := "test"
+		definition := "this is just a test"
+		dictionary := Dictionary{}
 
-	assertDefinition(t, dictionary, word, newDefinition)
+		err := dictionary.Update(word, definition)
+
+		assertError(t, err, ErrWordDoesNotExit)
+	})
 }

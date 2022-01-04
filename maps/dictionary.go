@@ -7,6 +7,7 @@ type Dictionary map[string]string
 const (
 	ErrNotFound = DictionaryErr("counld not find the word you were looking for")
 	ErrWordExists = DictionaryErr("cannot add word because it already exists")
+	ErrWordDoesNotExit = DictionaryErr("cannot update word because it does not exist")
 )
 
 type DictionaryErr string
@@ -41,6 +42,18 @@ func (d Dictionary) Add(word, definition string) error {
 	return nil
 }
 
-func (d Dictionary) Update(word, definition string) {
-	d[word] = definition
+// 定义字典的添加函数功能
+func (d Dictionary) Update(word, definition string) error {
+	_, err := d.Search(word)
+
+	switch err {
+	case ErrNotFound:
+		return ErrWordDoesNotExit
+	case nil:
+		d[word] = definition
+	default:
+		return err
+	}
+	
+	return nil
 }

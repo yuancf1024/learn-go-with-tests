@@ -24,10 +24,11 @@ func (s *SpySleeper) Sleep() {
 
 type ConfigurableSleeper struct {
 	duration time.Duration
+	sleep func(time.Duration)
 }
 
 func (o *ConfigurableSleeper) Sleep() {
-	time.Sleep(o.duration)
+	o.sleep(o.duration)
 }
 
 type CountdownOperationSpy struct {
@@ -47,11 +48,9 @@ const write = "write"
 const sleep = "sleep"
 
 func Countdown(out io.Writer, sleeper Sleeper) {
-	for i := countdownStart; i > 0; i-- {
-		sleeper.Sleep()
-	}
 
 	for i := countdownStart; i > 0; i-- {
+		sleeper.Sleep()
 		fmt.Fprintln(out, i)
 	}
 
@@ -60,6 +59,6 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 }
 
 func main() {
-	sleeper := &ConfigurableSleeper{1 * time.Second}
+	sleeper := &ConfigurableSleeper{1 * time.Second, time.Sleep}
 	Countdown(os.Stdout, sleeper)
 }

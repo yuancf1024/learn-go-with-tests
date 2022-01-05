@@ -30,13 +30,29 @@ func (o *ConfigurableSleeper) Sleep() {
 	time.Sleep(o.duration)
 }
 
+type CountdownOperationSpy struct {
+	Calls []string
+}
+
+func (s *CountdownOperationSpy) Sleep() {
+	s.Calls = append(s.Calls, sleep)
+}
+
+func (s *CountdownOperationSpy) Write(p []byte) (n int, err error) {
+	s.Calls = append(s.Calls, write)
+	return
+}
+
+const write = "write"
+const sleep = "sleep"
+
 func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := countdownStart; i > 0; i-- {
 		sleeper.Sleep()
+	}
+
+	for i := countdownStart; i > 0; i-- {
 		fmt.Fprintln(out, i)
-		// Fprintln格式使用其操作数的默认格式并写入io.Writer。
-		// 在操作数之间总是添加空格，并添加换行符。
-		// 它返回写入的字节数和遇到的任何写入错误。
 	}
 
 	sleeper.Sleep()

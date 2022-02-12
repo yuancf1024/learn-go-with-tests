@@ -13,6 +13,10 @@ func walk(x interface{}, fn func(input string)) {
 		if field.Kind() == reflect.String {
 			fn(field.String())
 		}
+
+		if field.Kind() == reflect.Struct {
+			walk(field.Interface(), fn)
+		}
 		
 	}
 	// Field返回结构v的第i个字段。如果v的类型不是struct或i不在范围内，它会panics。

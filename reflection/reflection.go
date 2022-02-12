@@ -7,6 +7,11 @@ func walk(x interface{}, fn func(input string)) {
 	// ValueOf返回一个新值，初始化为存储在接口i中的具体值。ValueOf(nil)返回零值。 
 	
 	// val.NumField 返回值中的字段数
+
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+	
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Field(i)
 

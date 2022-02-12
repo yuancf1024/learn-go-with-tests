@@ -9,7 +9,11 @@ func walk(x interface{}, fn func(input string)) {
 	// val.NumField 返回值中的字段数
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Field(i)
-		fn(field.String())
+
+		if field.Kind() == reflect.String {
+			fn(field.String())
+		}
+		
 	}
 	// Field返回结构v的第i个字段。如果v的类型不是struct或i不在范围内，它会panics。
 	

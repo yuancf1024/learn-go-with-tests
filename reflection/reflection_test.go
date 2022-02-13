@@ -77,6 +77,14 @@ func TestWalk(t *testing.T) {
 			},
 			[]string{"London", "Reykjavik"},
 		},
+		{
+			"Maps",
+			map[string]string{
+				"Foo": "Bar",
+				"Baz": "Boz",
+			},
+			[]string{"Bar", "Boz"},
+		}, // Map里面的键顺序处理起来并不固定，测试代码并不能一次通过
 	}
 	
 	for _, test := range cases {

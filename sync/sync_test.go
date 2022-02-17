@@ -8,8 +8,13 @@ func TestCounter(t *testing.T) {
 		counter.Inc()
 		counter.Inc()
 
-		if counter.Value() != 3 {
-			t.Errorf("got %d, want %d", counter.Value(), 3)
-		}
+		assertCounter(t, counter, 3)
 	})
+}
+
+func assertCounter(t testing.TB, got Counter, want int) {
+	t.Helper() // 调用帮助函数 t.Helper() 让报错信息更准确，有助于定位。
+	if got.Value() != want {
+		t.Errorf("got %d, want %d", got.Value(), want)
+	}
 }
